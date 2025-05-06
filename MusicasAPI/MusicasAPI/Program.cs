@@ -60,4 +60,12 @@ using (var scope = app.Services.CreateScope())
 app.MapGet("/musicas", async (MusicaDb db) =>
     await db.Musicas.ToListAsync());
 
+app.MapPost("/musicas", async (Musica musica, MusicaDb db) =>
+{
+    db.Musicas.Add(musica);
+    await db.SaveChangesAsync();
+
+    return Results.Created($"/musicas/{musica.Id}", musica);
+});
+
 app.Run();
