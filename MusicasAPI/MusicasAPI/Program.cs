@@ -1,8 +1,11 @@
+using Microsoft.EntityFrameworkCore;
+using MusicasAPI;
+
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-// Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
+builder.Services.AddDbContext<MusicaDb>(opt => opt.UseInMemoryDatabase("MusicaList"));
+builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
 var app = builder.Build();
 
@@ -14,28 +17,47 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-var summaries = new[]
+using (var scope = app.Services.CreateScope())
 {
-    "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-};
+    var db = scope.ServiceProvider.GetRequiredService<MusicaDb>();
 
-app.MapGet("/weatherforecast", () =>
+    if (!db.Musicas.Any())
     {
-        var forecast = Enumerable.Range(1, 5).Select(index =>
-                new WeatherForecast
-                (
-                    DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
-                    Random.Shared.Next(-20, 55),
-                    summaries[Random.Shared.Next(summaries.Length)]
-                ))
-            .ToArray();
-        return forecast;
-    })
-    .WithName("GetWeatherForecast");
+        db.Musicas.AddRange(
+            new Musica
+            {
+                Titulo = "Tá Vendo Aquela Lua",
+                Artista = "Sorriso Maroto",
+                Album = "Sorriso Maroto (Ao Vivo)",
+                Genero = "Pagode",
+                AnoLancamento = 2010,
+                Duracao = "4:06"
+            },
+            new Musica
+            {
+                Titulo = "Me Apaixonei Pela Pessoa Errada",
+                Artista = "Exaltasamba",
+                Album = "Ao Vivo",
+                Genero = "Pagode",
+                AnoLancamento = 2008,
+                Duracao = "4:15"
+            },
+            new Musica
+            {
+                Titulo = "Deixa Acontecer",
+                Artista = "Grupo Revelação",
+                Album = "Revelação Ao Vivo",
+                Genero = "Pagode",
+                AnoLancamento = 2000,
+                Duracao = "3:35"
+            }
+        );
+
+        await db.SaveChangesAsync();
+    }
+}
+
+app.MapGet("/musicas", async (MusicaDb db) =>
+    await db.Musicas.ToListAsync());
 
 app.Run();
-
-record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary)
-{
-    public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
-}
