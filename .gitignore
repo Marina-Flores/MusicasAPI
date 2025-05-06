@@ -1,0 +1,91 @@
+## Build results
+bin/
+obj/
+
+## Rider project files
+.idea/
+*.sln.iml
+
+## User-specific files
+*.user
+*.userosscache
+*.suo
+*.sln.docstates
+
+## ASP.NET Scaffolding
+ScaffoldingReadMe.txt
+
+## DotCover
+*.dotCover
+
+## Backup & Report Files from converting an old project file
+_UpgradeReport_Files/
+Backup*/
+UpgradeLog*.XML
+UpgradeLog*.htm
+
+## NCrunch
+*.ncrunch*
+.*ncrunch*
+
+## MSTest test results
+TestResults/
+*.VisualState.xml
+*.vspx
+*.vspscc
+
+## NUnit
+*.VisualState.xml
+TestResult.xml
+
+## Build Logs
+*.log
+
+## .NET Core
+project.lock.json
+project.fragment.lock.json
+artifacts/
+
+# Ignore local NuGet packages
+*.nupkg
+*.snupkg
+*.nuspec
+.nuget/
+packages/
+*.vsix
+
+# Rider-specific files
+.idea/
+*.sln.iml
+.idea/.idea.*
+
+# Others
+.vs/
+_ReSharper*/
+*.DotSettings.user
+*.DotSettings
+*.dbmdl
+
+# macOS
+.DS_Store
+
+# Windows
+Thumbs.db
+ehthumbs.db
+desktop.ini
+
+# Linux
+*~
+
+# Rider caches
+.idea/.idea.*
+.idea/.idea_modules/
+.idea/modules.xml
+.idea/workspace.xml
+.idea/tasks.xml
+.idea/dictionaries/
+.idea/httpRequests/
+
+# JetBrains Rider plugin caches
+.idea/.rider*
+
