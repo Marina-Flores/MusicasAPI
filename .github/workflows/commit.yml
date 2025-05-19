@@ -19,11 +19,11 @@ jobs:
 
     - name: Restore dependencies
       run: dotnet restore
-      working-directory: ./MusicasAPI
+      working-directory: ./MusicasAPI/MusicasAPI
 
     - name: Build
       run: dotnet build --no-restore
-      working-directory: ./MusicasAPI
+      working-directory: ./MusicasAPI/MusicasAPI
 
     - name: Run project
-      run: dotnet run --no-build --project ./MusicasAPI/MusicasAPI.csproj
+      run: dotnet run --no-build --project ./MusicasAPI/MusicasAPI/MusicasAPI.csproj
