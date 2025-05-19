@@ -26,4 +26,4 @@ jobs:
       working-directory: ./MusicasAPI
 
     - name: Run project
-      run: dotnet run --no-build --project ./MusicasAPI.csproj
+      run: dotnet run --no-build --project ./MusicasAPI
