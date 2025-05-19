@@ -1,0 +1,27 @@
+name: Build and Run on Commit to Main
+
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  build-run:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout código
+      uses: actions/checkout@v4
+
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: 9.0.x
+
+    - name: Restore dependencies
+      run: dotnet restore
+
+    - name: Build
+      run: dotnet build --no-restore
+
+    - name: Run project
+      run: dotnet run --no-build --project ./MusicasAPI.csproj
