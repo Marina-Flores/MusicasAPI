@@ -7,6 +7,7 @@ Uma API simples em .NET Core para gerenciar uma coleção de músicas. Desenvolv
 - [Instalação](#instalação)
 - [Como Usar](#utilização-da-api)
 - [GitHub Flow](#github-flow)
+- [Vagrant](#infraestrutura-com-vagrant)
 
 ## Instalação
 
@@ -70,3 +71,56 @@ Este fluxo de trabalho mantém o processo simples, limpo e organizado, sem a com
 - **Simplicidade**: Sem a necessidade de múltiplas branches como em fluxos mais complexos.
 - **Produtividade**: Como estou trabalhando sozinha, posso focar diretamente nas tarefas sem precisar me preocupar com gerenciar múltiplas versões ou equipes.
 - **Velocidade**: A abordagem direta e com Pull Requests permite uma rápida integração de novas funcionalidades com menos etapas.
+
+## Infraestrutura com Vagrant
+
+Este projeto utiliza o **Vagrant** com **VirtualBox** para simular um ambiente com duas VMs:
+
+- **VM1**: usada para testar a API via `curl`.
+- **VM2**: responsável por executar a aplicação `.NET 9`.
+
+### Requisitos
+
+Antes de iniciar, instale:
+
+- [Vagrant](https://developer.hashicorp.com/vagrant/downloads)
+- [VirtualBox](https://www.virtualbox.org/wiki/Downloads)
+
+### Como subir a infraestrutura
+
+1. Na raiz do projeto, onde está o `Vagrantfile`, execute:
+
+   ```bash
+   vagrant up
+   ```
+    Isso criará duas VMs:
+    
+    - VM1 com IP 192.168.56.10 e 1024 MB de memória.
+    - VM2 com IP 192.168.56.11, 2048 MB de memória e provisionamento automático da API.
+
+2. Acesse a VM1 para testar a aplicação:
+
+   ```bash
+   vagrant ssh vm1
+   ```
+   
+3. Use curl para testar o endpoint GET da API (por exemplo):
+
+   ```bash
+   curl http://192.168.56.11:5000/musicas
+   ```
+
+   Isso envia uma requisição da VM1 para a API rodando na VM2.
+
+4. Para parar as VMs:
+   
+   ```bash
+   vagrant halt
+   ```
+
+5. Para destruir as VMs completamente:
+
+   ```bash
+   vagrant destroy
+   ```
+
